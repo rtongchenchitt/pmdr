@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- HTML5 Hello world by kirupa - http://www.kirupa.com/html5/getting_your_feet_wet_html5_pg1.htm -->
 <html lang="en-us">
 
 <head>
@@ -8,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body id="body">
     <div id="mainContent">
         <p id="counter">Ready to start!</p>
         <button id="startButton" class="buttonStyle">Start Counter</button>
@@ -16,7 +15,7 @@
     </div>
     
     <script src="js/jquery-1.10.1.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/countdown.js"></script>
     <script>
         var myCounter;
         
@@ -24,7 +23,7 @@
             function() {
                 myCounter = new Countdown({
                     minutes: 25,
-                    seconds: 00,
+                    seconds: 0,
                     
                     onUpdateStatus: 
                         function(minutes, seconds){
@@ -32,18 +31,26 @@
                             $("#counter").text(i);
                         },
                     onCounterEnd: 
-                        function(){ terminateCounter(myCounter) }
-                    
+                        function(){
+                            toggleButton($("#stopButton"), $("#startButton"));
+                            $("#counter").text("Ready to start!");
+                        }    
                 });
+                
                 myCounter.start();
                 toggleButton($("#startButton"), $("#stopButton"));
             }
         );
         
         $("#stopButton").hide();
-        $("#stopButton").click( function(){ terminateCounter(myCounter) } );
+        $("#stopButton").click( function(){ myCounter.stop(); });
         
         
+        
+        function toggleButton(elementToHide, elementToShow){
+            elementToHide.hide();
+            elementToShow.show();
+        }
         
     </script>
 </body>
